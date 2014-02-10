@@ -1,0 +1,57 @@
+Notes on the Metafile:
+
+Cases when meta.xml is not required:
+1. Single core file with first row containing the standard DwC terms
+2. EML.xml is present, and is named "EML.xml"
+
+Cases when meta.xml is required:
+1. No header row is present
+2. Headers are not DwC terms
+3. EML.xml is named otherwise
+4. One or more extensions are present
+
+Structure:
+
+<archive> element
+Contains namespaces and the location of the metafile schema.
+Contains "metadata" attribute, a URL with the location of a metadata description of the entire archive.
+
+<core> and <extension> elements
+There MUST be one and only one <core> element. <extension> elements are optional.
+If extensions are being used, <core> must have an "id" field and each <extension> must have a "coreid" field.
+
+Three parts of the <core> and <extension> elements:
+
+Physical properties of published data file: attributes of the <core> or <extension> elements
+1. encoding: the character encoding. Recommended UTF-8
+2. fieldsTerminatedBy: the character used to separate columns. Recommended tab or comma ","
+3. linesTerminatedBy: the character used to end a line. Recommended newline "\n"
+4. fieldsEnclosedBy: the character used to enclose data values. Recommended quotes when linesTerminatedBy is comma, or nothing when linesTerminatedBy is tab
+5. ignoreHeaderLines: boolean (1 or 0) to indicate if the first row contains headers (1) or data (0)
+6. dateFormat: representation of the date format, if consistent. E.g. DDMMYYYY, YYYY-MM-DD, MM/DD/YY...
+7. rowType: URI that identifies the data type, such as http://rs.tdwg.org/dwc/terms/Taxon or one of http://rs.gbif.org/extension/
+
+Identification of core data file: the <files> element
+Each <core> or <extension> element must contain one or more <files> element
+The <files> element contains one or more <location> elements, one for each file.
+The content of the <location> element can be a relative path "data/taxon.txt" or a URL "ftp://ftp.gbif.org/tim/specimen.txt"
+
+Description of specific data columns: the <id> and <field> elements
+If extensions are being used, <core> must have an <id> element, recommended in position 0 (first column) and each <extension> must have a <coreId> element, recommended in position 0.
+Each <core> and <extension> must have one or more <field> elements.
+If a column contains non-standard data, no <field> element is required for that column.
+Attributes of the <field> element:
+1. index: the relative position of the column, 0 based
+2. term: the URI of the term
+3. type: the type of the content, such as xs:integer, xs:nonNegativeInteger, xs:date... Default is "string"
+4. default: the default value if the field is empty in a row
+If a <field> element does not contain an index attribute, it is considered an archive-wide term. This element must contain a default attribute with the value for the constant.
+
+Variables in Static Mappings:
+Default values can be made variable by inserting a value in a column. For example:
+<field default="http://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value={id}" term="http://purl.org/dc/terms/identifier"/>
+ is a field not present in the core file, with a variable value. For each record, the value of the field is the one extracted through the URL in "default" attribute, putting the value in column id in {id}
+The name of the column can be substituted by the number of the column, NOT THE INDEX ({12} means 12th column).
+
+Metafile Schema:
+http://darwincore.googlecode.com/svn/trunk/text/tdwg_dwc_text.xsd

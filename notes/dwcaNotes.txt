@@ -1,0 +1,44 @@
+Notes on the DarwinCore Archive:
+
+It doesn't need to be a zip, it can be a gzip, or even a nonzipped folder.
+
+Components:
+
+1. One Core Data File (required).
+Consisting of a standard set of DWC terms. Fielded text.
+Currently two types:
+a. Occurrence, or PBD. Core ID is dwc:occurenceID. Terms in http://rs.gbif.org/core/dwc_occurrence.xml
+b. Taxon. Core ID is dwc:taxonID. Terms in http://rs.gbif.org/core/dwc_taxon.xml
+
+2. One or more Extension File/s (optional).
+List of accepted extensions in http://rs.gbif.org/extension/
+
+3. One Descriptor Metafile (required if extensions are used or if field names are non-dwc terms)
+See metaXmlNotes.txt
+
+4. One Resource Metadata Document (required? not clear)
+The use of the GBIF Metadata Profile is suggested. See emlNotes.txt
+Others are accepted
+
+All files can be compressed into a single file, using zip or tar.gz
+
+Some requirements:
+
+Mandatory terms for occurrence files:
+occurrenceID. If not present, can be a concatenation of institutionCode:collectionCode:catalogNumber
+institutionCode
+collectionCode
+catalogNumber
+scientificName
+basisOfRecord
+
+Mandatory terms for taxon files:
+taxonID
+scientificName
+
+For text files:
+Encoded using UTF-8
+
+DWCA Validator: http://tools.gbif.org/dwca-validator/
+Checklist DWCA example: http://gbif-ecat.googlecode.com/files/Whales-DWC-A.zip
+Occurrence DWCA example: http://www.siba.ad/andorra/dwcaMolluscsAndorra.zip

@@ -1,0 +1,119 @@
+Notes on the GBIF Metadata Profile:
+
+Based on Ecological Metadata Language (EML), subsetted and extended.
+
+Structure:
+
+Dataset (Resource)
+Project
+People and Organisations
+Keyword Set (General Keywords)
+Coverage
+    Taxonomic Coverage
+    Geographic Coverage
+    Temporal Coverage
+Methods
+Intellectual Property Rights
+Additional Metadata + Natural Collections Descriptions Data
+
+Fields with "(pao)" are of type "People And Organisations"
+
+Dataset (Resource): elements relating to a single dataset
+
+* alternateIdentifier (optional): UUID for the EML document
+* title (required): Description of the resource. More than one may be provided. If more than one lanuage, use xml:lang attribute to indicate language different than EN
+* creator (pao): The responsible for creating the resource
+* metadataProvider (pao, required): the responsible for providing documentation
+* associatedParty (pao): another person or organization associated with the resource. The role should be indicated in the <role> element
+* contact (pao): contact information for the dataset
+* pubDate (required): date of publication of the resource. YYYY or YYYY-MM-DD. MM and DD are optional. Must conform ISO 8601
+* language (required): the language of the resource, either well-known language name or ISO language code (recommended, http://vocabularies.gbif.org/vocabularies/lang)
+* additionalInfo: other annotations
+* url: the URL of the resource
+* abstract (required): a brief overview of the resource
+
+Project: info on the project
+
+* title
+* personnel (pao): people involved
+* funding: info on the fundingof the project
+* studyAreaDescription: description of the physical area associated woth the project
+* designDescription: description of the research design
+
+People and Organisations: list of items to describe a person or organisation
+
+* givenName (required): subfield of individualName, first name
+* surName (required): subfield of individualName, last name
+* organizationName: full name of the organization
+* positionName: title of the originator of the data package (e.g. "Herbarium data manager")
+* role: description of the role of the party (e.g. "technician", "reviewer", "principal investigator")
+* phone
+* electronicMailAddress (required)
+* deliveryPoint: subfield of address, describes the physical address of the responsible for the resource
+* postalCode: subfield of address
+* city: subfield of address
+* administrativeArea: subfield of address. State or Province
+* country: subfield of address
+* onlineURL: link to associated information for a party, usually a web site
+
+KeywordSet: wrapper for keyword and keywordThesaurus, both are required together
+
+* keyword: one and only one keyword
+* keywordThesaurus: name of the thesaurus from which the keyword was derived. If inexistent, keep a placeholder such as "N/A"
+
+Coverage: extent of the coverage
+
+Taxonomic Coverage:
+
+* generalTaxonomicCoverage: general description or list fo species or higher
+* taxnomicClassification: range of taxa addressed 
+* taxonRankName: name of the taxonomic rank (e.g. Class)
+* taxonRankValue: name representing the taxonomic rank being described (e.g. Mammalia)
+* commonName: applicable common names (e.g. mammals)
+
+Geographic Coverage:
+
+* geographicDescription: short text describing the areal domain
+* westBoundingCoordinate: subfield of boundingCoordinates, W margin, in decimal degrees
+* eastBoundingCoordinate: subfield of boundingCoordinates, E margin, in decimal degrees
+* northBoundingCoordinate: subfield of boundingCoordinates, N margin, in decimal degrees
+* southBoundingCoordinate: subfield of boundingCoordinates, S margin, in decimal degrees
+
+Temporal coverage:
+
+* beginDate: subfield of rangeOfDates, ISO 8601 compliant
+* endDate: subfield of rangeOfDates, ISO 8601 compliant
+* singleDateTime: Intended to describe a single date and time for an event
+
+Methods: scientific methods used in the collection of the resource
+
+* methodStep: repeated sets of elements that document a series of procedures
+* qualityControl: description of actions taken to control or assess the quality
+* sampling: sampling procedures, including coverages
+* studyExtent: subfield of sampling, description of a specific sampling area and frequency
+* samplingDescription: subfield of sampling, human-readable description of the samping procedures
+
+IPR
+
+* purpose: description of the purpose of the dataset
+* intellectualRights: statement or reference to the IPR, (c) and various Property Rights, including use
+
+Additional Metadata + NCD Related: other relevant metadata and/or EML extensions
+
+* dateStamp: date and time of creation of the metadata
+* metadataLanguage: language of the metadata document, see language
+* hierarchyLevel: dataset level to which the metadata applies. Default: dataset
+* citation: citation for the work
+* bibliography: list of citations of the literature related/used
+* physical: container element for all elements that describe the internal/external characteristics of a data object
+* resourceLogoURL: URL of the logo of the resource
+* parentCollectionIdentifier (optional): subfield of collection, identifier for the parent collection
+* collectionName (optional): subfield of collection, name of the collection
+* collectionIdentifier (optional): subfield of collection, URI of the collection
+* formationPeriod: text description of the time period during which the collection was created
+* livingTimePeriod: time period during which biological material was alive
+* specimenPreservationMethod: picklist keyword indicating the process for preservation of the non-living collections, expected to use the Specimen Preservation Method Type Term vocabulary
+* jgtiCuratorialUnit: Number to define the amount of specimens, samples or batches
+
+Metadata Profile Schema (1.0): http://rs.gbif.org/schema/eml-gbif-profile/1.0/eml-gbif-profile.xsd
+Metadata Profile Schema (???): http://rs.gbif.org/schema/eml-gbif-profile/dev/eml.xsd
